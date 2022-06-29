@@ -1,15 +1,18 @@
-def choice_checker(question, add_sub_list, error):
+from re import L
+
+
+def choice_checker(add_sub_mode, sub_list, add_list, error):
 
     valid = False
     while not valid:
 
         # Ask user for choice (and put in lowercase)
-        response = input(question).lower()
+        response = input(add_sub_mode).lower()
 
         # Iterates through list and if response us an item
         # In the list (or the first letter of an item), the
         # Full item name is returned
-        for item in add_sub_list:
+        for item in add_list, sub_list:
             if response == item[0] or response == item:
                 return item
                 
@@ -19,19 +22,20 @@ def choice_checker(question, add_sub_list, error):
 
         return response
 
-add_sub_list = ["+", "-", "take away", "minus", "plus", "subtract", "add"]
+# List of acceptable expressions
+sub_list = ["-", "take away", "minus", "subtraction"]
+add_list = ["add", "+", "addition", "plus"]
 
 # Ask user if they want to play addition or subtraction mode
-add_sub_mode = choice_checker("Would you like to play the addition game or the subtraction game? Please enter + / - ", add_sub_list, "Please enter +, -, or take away")
-print()
-
-print("Mode: ", add_sub_mode)
-
-if add_sub_mode == "+" "Addition" "Add" "Plus":
-    print("You chose addition mode!")
-
-if add_sub_mode == "-" "minus" "subtract" "subtract":
-    print("You chose subtraction mode!")
-
-else:
-    print(error)
+add_sub_list = ""
+while add_sub_list == "":
+    add_sub_mode = choice_checker("Would you like to play the addition quiz or the subtraction quiz? Please enter + / - ", add_list, sub_list, "Please enter + or -")
+    print()
+    if add_sub_mode in add_list:
+        print("Mode: +")
+        break
+    if add_sub_mode in sub_list:
+        print("Mode: -")
+        break
+    while add_sub_mode != add_sub_list:
+        continue

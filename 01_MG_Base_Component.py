@@ -21,7 +21,7 @@ def instructions():
     print()
 
 
-def choice_checker (question, valid_list, error):
+def choice_checker (question, add_sub_list, error):
 
     valid = False
     while not valid:
@@ -32,7 +32,7 @@ def choice_checker (question, valid_list, error):
         # Iterates through list and if response us an item
         # In the list (or the first letter of an item), the
         # Full item name is returned
-        for item in valid_list:
+        for item in add_sub_list:
             if response == item[0] or response == item:
                 return item
         
@@ -69,6 +69,9 @@ def check_rounds():
 
         return response
 
+
+
+# List of acceptable expressions
 yes_no_list = ["yes", "no"]
 
 played_before = choice_checker("Have you played this game before? Please enter yes or no. ", yes_no_list, "Please enter yes / no")
@@ -95,6 +98,16 @@ while end_game == "no":
     # Rounds Heading
     print()
     if mode == "infinite":
+        heading = "Continuous Mode: Round {}".format(rounds_played + 1)
+        rounds += 1
+
+    else:
+        heading = "Round {} of {}".format(rounds_played + 1, rounds)
+
+    
+    # Rounds Heading
+    print()
+    if mode == "infinite":
         heading = "Continuous Mode: Question {}".format(rounds_played + 1)
         rounds += 1
 
@@ -110,6 +123,3 @@ while end_game == "no":
 
     if rounds_played >= rounds:
         break
-
-
-    
