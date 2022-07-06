@@ -1,8 +1,11 @@
+import random
+from re import L
+
+# Welcomes user to game
 print("***** Welcome to THE MATHS GAME *****")
 print()
 
-# checks users choice based on a list
-
+# Prints instructions if user enters "no" in played_before
 def instructions():
     print("*****Instrustions*****")
     print()
@@ -19,7 +22,7 @@ def instructions():
     print("Lost = Answered question incorrectly.")
     print()
 
-
+# Checks if the users choice is valid for add_sub_mode
 def choice_checker (question, add_sub_list, error):
 
     valid = False
@@ -40,6 +43,7 @@ def choice_checker (question, add_sub_list, error):
         print(error)
         print()
 
+# Lets the user enter their nmuber of rounds, or continuous mode
 def check_rounds():
     while True:
         response = input("How many rounds? or <enter> for continuous mode: ")
@@ -73,22 +77,63 @@ def check_rounds():
 
 # List of acceptable expressions
 yes_no_list = ["yes", "no"]
+# List of acceptable expressions
+sub_list = ["-", "take away", "minus", "subtraction"]
+add_list = ["add", "+", "addition", "plus"]
 
+# Boundaries for the numbers
+low_num = 0
+high_num = 20
+
+# Check if the user has played this game before
 played_before = choice_checker("Have you played this game before? Please enter yes or no. ", yes_no_list, "Please enter yes / no")
 print()
 
+# If the user hasn't played before they get to see the instructions
 if played_before == "no":
     instructions()
 
+# Ask user if they want to play addition or subtraction mode
+add_sub_list = ""
+while add_sub_list == "":
+    add_sub_mode = input("Would you like to play the addition quiz or the subtraction quiz? Please enter + / - ")
+    print()
+    if add_sub_mode in add_list:
+        print("Mode: +")
+        break
+    if add_sub_mode in sub_list:
+        print("Mode: -")
+        break
+    else:
+        print("Please enter a valid operation")
+        continue
+
+# Gives a clean slate to add to and eventually make end of game statements on
 rounds_played = 0
 rounds_lost = 0
 rounds_won = 0
+
+# Making the numbers random and defining the numbers
+number_1 = random.randint(low_num, high_num)
+number_2 = random.randint(low_num, high_num)
+number_3 = random.randint(low_num, high_num)
+
+# Define addition and subtraction question
+addition_question = input("What is {} + {} =?".format(number_1, number_2))
+addition_question_v2 = input("What is {} + {} + {} =?".format(number_1, number_2, number_3))
+addition_question_v3 = input("What is {} plus {} =?".format(number_1, number_2))
+subtraction_question = input("What does {} - {} =?".format(max(number_1, number_2), min(number_1, number_2)))
+subtraction_question_v2 = input("What does {} minus {} =?".format(max(number_1, number_2), min(number_1, number_2)))
+
+# List of questions to randomise which question it asks
+questions = [addition_question, addition_question_v2, addition_question_v3, subtraction_question, subtraction_question_v2]
 
 mode = "regular"
 
 rounds_played = 0
 rounds = check_rounds()
 
+# If the user presses <enter> then run infinite mode
 if rounds == "":
     mode = "infinite"
     rounds = 5
@@ -98,20 +143,27 @@ while end_game == "no":
 
     numbers_guessed = []
 
+    print(rounds)
+    
+    # Randomise which question it asks
+    random_item = random.choice(questions)
+
     # Rounds Heading
     print()
     if mode == "infinite":
         heading = "Continuous Mode: Round {}".format(rounds_played + 1)
+        print(random_item)
         rounds += 1
     else:
         heading = "Round {} of {}".format(rounds_played + 1, rounds)
+        print(random_item)
 
     print(heading)
 
-    testing_purposes = input("Please enter anything. ")
-
-    if testing_purposes == "xxx":
+    if random_item == "xxx":
         break
-rounds_played = 0
-rounds_lost = 0
-rounds_won = 0
+
+    rounds_played += 1
+
+    if rounds_played >= rounds:
+        break

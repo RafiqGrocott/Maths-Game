@@ -10,7 +10,7 @@ subtraction_question = ("What does {} - {} =?")
 subtraction_question_v2 = ("What does {} minus {} =?")
 
 # Print 5 different questions for testing purposes
-while question_num <= 5:
+while question_num <= 4:
     # Generate a random number between boundries
     number_1 = random.randint(low_num, high_num)
     number_2 = random.randint(low_num, high_num)
