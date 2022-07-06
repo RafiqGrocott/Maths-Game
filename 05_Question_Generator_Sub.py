@@ -6,6 +6,9 @@ high_num = 20
 
 question_num = 0
 
+subtraction_question = ("What does {} - {} =?")
+subtraction_question_v2 = ("What does {} minus {} =?")
+
 # Print 5 different questions for testing purposes
 while question_num <= 5:
     # Generate a random number between boundries
@@ -15,10 +18,14 @@ while question_num <= 5:
     # Increases question number
     question_num += 1
 
-    # Make sure the question doesn't go into the negatives
-    if number_1 >= number_2:
-        subtraction_question = ("What does {} - {} =?".format(number_1, number_2))
-    else:
-        subtraction_question = ("What does {} - {} =?".format(number_2, number_1))
+    subtraction_question = ("What does {} - {} =?".format(max(number_1, number_2), min(number_1, number_2)))
+    subtraction_question_v2 = ("What does {} minus {} =?".format(max(number_1, number_2), min(number_1, number_2)))
 
-    print(subtraction_question)
+    # Making a list of questions to randomise
+    questions = [subtraction_question, subtraction_question_v2]
+
+    # Randomise which question it asks
+    random_item = random.choice(questions)
+
+    # Print question
+    print(random_item)
