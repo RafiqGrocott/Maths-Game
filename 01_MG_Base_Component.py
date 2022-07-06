@@ -10,7 +10,6 @@ def instructions():
     print()
     print("You will be asked addition and subtraction questions.")
     print()
-    print("Cargan was here 8----")
     print()
     print("As you go along, the code will calculate the number of rounds you've won and lost"
         "and will eventually tell you how many you won and lost, and also the percentage of rounds you won and lost.")
@@ -43,7 +42,7 @@ def choice_checker (question, add_sub_list, error):
 
 def check_rounds():
     while True:
-        response = input("How many questions? or <enter> for continuous mode: ")
+        response = input("How many rounds? or <enter> for continuous mode: ")
         print()
 
 
@@ -71,6 +70,7 @@ def check_rounds():
 
 
 
+
 # List of acceptable expressions
 yes_no_list = ["yes", "no"]
 
@@ -80,46 +80,38 @@ print()
 if played_before == "no":
     instructions()
 
+rounds_played = 0
+rounds_lost = 0
+rounds_won = 0
+
 mode = "regular"
+
+rounds_played = 0
 rounds = check_rounds()
 
 if rounds == "":
     mode = "infinite"
     rounds = 5
 
-rounds_played = 0
-rounds_lost = 0
-rounds_won = 0
-
-# game loop starts here
 end_game = "no"
 while end_game == "no":
+
+    numbers_guessed = []
 
     # Rounds Heading
     print()
     if mode == "infinite":
         heading = "Continuous Mode: Round {}".format(rounds_played + 1)
         rounds += 1
-
     else:
         heading = "Round {} of {}".format(rounds_played + 1, rounds)
 
-    
-    # Rounds Heading
-    print()
-    if mode == "infinite":
-        heading = "Continuous Mode: Question {}".format(rounds_played + 1)
-        rounds += 1
+    print(heading)
 
-    else:
-        heading = "Question {} of {}".format(rounds_played + 1, rounds)
+    testing_purposes = input("Please enter anything. ")
 
-        print(heading)
-
-    if end_game == "yes":
+    if testing_purposes == "xxx":
         break
-
-    rounds_played += 1
-
-    if rounds_played >= rounds:
-        break
+rounds_played = 0
+rounds_lost = 0
+rounds_won = 0
