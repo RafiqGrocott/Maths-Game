@@ -1,5 +1,6 @@
 import random
 from re import L
+from tkinter import Y
 
 # Welcomes user to game
 print("***** Welcome to THE MATHS GAME *****")
@@ -113,21 +114,6 @@ rounds_played = 0
 rounds_lost = 0
 rounds_won = 0
 
-# Making the numbers random and defining the numbers
-number_1 = random.randint(low_num, high_num)
-number_2 = random.randint(low_num, high_num)
-number_3 = random.randint(low_num, high_num)
-
-# Define addition and subtraction question
-addition_question = input("What is {} + {} =?".format(number_1, number_2))
-addition_question_v2 = input("What is {} + {} + {} =?".format(number_1, number_2, number_3))
-addition_question_v3 = input("What is {} plus {} =?".format(number_1, number_2))
-subtraction_question = input("What does {} - {} =?".format(max(number_1, number_2), min(number_1, number_2)))
-subtraction_question_v2 = input("What does {} minus {} =?".format(max(number_1, number_2), min(number_1, number_2)))
-
-# List of questions to randomise which question it asks
-questions = [addition_question, addition_question_v2, addition_question_v3, subtraction_question, subtraction_question_v2]
-
 mode = "regular"
 
 rounds_played = 0
@@ -141,29 +127,41 @@ if rounds == "":
 end_game = "no"
 while end_game == "no":
 
-    numbers_guessed = []
-
-    print(rounds)
-    
-    # Randomise which question it asks
-    random_item = random.choice(questions)
-
     # Rounds Heading
     print()
     if mode == "infinite":
         heading = "Continuous Mode: Round {}".format(rounds_played + 1)
-        print(random_item)
         rounds += 1
     else:
         heading = "Round {} of {}".format(rounds_played + 1, rounds)
-        print(random_item)
 
     print(heading)
 
-    if random_item == "xxx":
-        break
 
-    rounds_played += 1
+    while (rounds_played + 1) <= rounds:
 
-    if rounds_played >= rounds:
-        break
+        # Increases question number
+        rounds_played += 1
+    
+        # Generate a random number between boundries
+        number_1 = random.randint(low_num, high_num)
+        number_2 = random.randint(low_num, high_num)
+        number_3 = random.randint(low_num, high_num)
+
+        # Define addition and subtraction question
+        addition_question = ("What is {} + {} =?".format(number_1, number_2))
+        addition_question_v2 = ("What is {} + {} + {} =?".format(number_1, number_2, number_3))
+        addition_question_v3 = ("What is {} plus {} =?".format(number_1, number_2))
+        subtraction_question = ("What does {} - {} =?".format(max(number_1, number_2), min(number_1, number_2)))
+        subtraction_question_v2 = ("What does {} minus {} =?".format(max(number_1, number_2), min(number_1, number_2)))
+            
+        # List of questions to randomise which question it asks
+        questions = [addition_question, addition_question_v2, addition_question_v3, subtraction_question, subtraction_question_v2]
+
+        # Randomise which question it asks
+        random_item = random.choice(questions)
+
+        input(random_item)
+
+        if rounds_played + 1 >= rounds:
+            break

@@ -1,43 +1,35 @@
 import random
 
-
-
 # Boundaries for the numbers
-
 low_num = 0
-
 high_num = 20
-
-
-
-# Making the numbers random
-number_1 = random.randint(low_num, high_num)
-number_2 = random.randint(low_num, high_num)
 
 question_num = 0
 
-print("Question {}".format(question_num))
-# Generate questions with the random numbers
-addition_question = input("What does {} + {} =? ".format(number_1, number_2))
+# Print 5 questions for testing purposes
+while question_num <= 4:
 
-# Printing question
-user_answer = int(addition_question)
+    # Making the numbers random and defining the numbers
+    number_1 = random.randint(low_num, high_num)
+    number_2 = random.randint(low_num, high_num)
+    number_3 = random.randint(low_num, high_num)
 
-# Answer to the question
-addition_answer = number_1 + number_2
-
-while user_answer != "":
-    print()
+    # Add one round
     question_num += 1
-    break
-while user_answer == addition_answer:
-    print("You got it right!!!")
-    break
-else:
-    print("Oops, the answer was actually {}.".format(addition_answer))
 
+    # Define addition question
+    addition_question = input("What is {} + {} =? ".format(number_1, number_2))
+    addition_question_v2 = input("What is {} + {} + {} =? ".format(number_1, number_2, number_3))
+    addition_question_v3 = input("What is {} plus {} =? ".format(number_1, number_2))
 
+    # Define subtraction questions
+    subtraction_question = input("What does {} - {} =? ".format(max(number_1, number_2), min(number_1, number_2)))
+    subtraction_question_v2 = input("What does {} minus {} =? ".format(max(number_1, number_2), min(number_1, number_2)))
+    
+    # Making a list of questions to randomise
+    questions = [subtraction_question, subtraction_question_v2, addition_question, addition_question_v2, addition_question_v3]
 
-# Gap between feeback and nect question
+    # Randomise which question it asks
+    random_item = random.choice(questions)
 
-print()
+    print(random_item)

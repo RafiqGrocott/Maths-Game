@@ -29,29 +29,8 @@ while question_num <= 4:
     # Randomise which question it asks
     random_item = random.choice(questions)
 
-    # Letting the user input their guess
     input(random_item)
 
-    # Define user answer
-    user_input = input
+    float(input)
 
-    # Make the equations
-    addition_answer_v2 = (number_3 + number_2 + number_1)
-    addition_answer = (number_1 + number_2)
-    subtraction_answer = (max(number_2, number_1) - min(number_1, number_2))
-
-    if random_item == addition_question or addition_question_v3:
-        answer = addition_answer
-    elif random_item == addition_question_v2:
-        answer = addition_answer_v2
-    else:
-        answer = subtraction_answer
-
-    if user_input == answer:
-        print("You got it right!!!")
-    elif user_input != answer or user_input >= 61 or user_input <= 0:
-        print("Oops, the answer was actually {}".format(answer))
-
-    # Increases question number by 1
-    question_num += 1
-    continue
+    print(input)
