@@ -6,6 +6,44 @@ high_num = 20
 
 question_num = 0
 
+# Number checking function goes here
+def intcheck(question, low=None, high=None, exit_code = None):
+
+    while True:
+
+        #sets up error messages
+        if low is not None and high is not None:
+            error = "Please enter an integer between 0 and 60 (inclusive)"
+        else:
+            error = "Please enter an integer"
+
+        try:
+            response = input(question)
+
+            #check to see if response is the exit code and return it
+            if response == exit_code:
+                return response
+
+            #change the response into an integer
+            else:
+                response = int(response)
+
+            #checks response is not too low, not use of 'is not' keywords
+            if low is not None and response < low:
+                print(error)
+                continue
+            #checks response is not too high
+            if high is not None and response > high:
+                print(error)
+                continue
+
+            return response
+
+        #checks input is a integer
+        except ValueError:
+            print(error)
+            continue
+        
 # Print 5 questions for testing purposes
 while question_num <= 4:
 
@@ -30,27 +68,34 @@ while question_num <= 4:
     random_item = random.choice(questions)
 
     # Letting the user input their guess
-    input(random_item)
-
-    # Define user answer
-    user_input = input
+    user_input = input(random_item)
 
     # Make the equations
-    addition_answer_v2 = (number_3 + number_2 + number_1)
-    addition_answer = (number_1 + number_2)
-    subtraction_answer = (max(number_2, number_1) - min(number_1, number_2))
+    subtraction_answer = max(number_2, number_1) - min(number_1, number_2)
+    addition_answer = number_1 + number_2
+    addition_answer_v2 = number_3 + number_2 + number_1
 
-    if random_item == addition_question or addition_question_v3:
+    user_input_instruction = "Guess a number between {} and {}: ".format(low_num, high_num)
+    user_input = intcheck(user_input_instruction, low_num, high_num, "xxx")
+
+    if random_item == addition_question or random_item == addition_question_v3:
         answer = addition_answer
+        if user_input == answer:
+            print("You got it right!!!")
+        else:
+            print("Oops, the answer was actually {}".format(answer))
     elif random_item == addition_question_v2:
         answer = addition_answer_v2
+        if user_input == answer:
+            print("You got it right!!!")
+        else:
+            print("Oops, the answer was actually {}".format(answer))
     else:
         answer = subtraction_answer
-
-    if user_input == answer:
-        print("You got it right!!!")
-    elif user_input != answer or user_input >= 61 or user_input <= 0:
-        print("Oops, the answer was actually {}".format(answer))
+        if user_input == answer:
+            print("You got it right!!!")
+        else:
+            print("Oops, the answer was actually {}".format(answer))
 
     # Increases question number by 1
     question_num += 1

@@ -138,30 +138,28 @@ while end_game == "no":
     print(heading)
 
 
-    while (rounds_played + 1) <= rounds:
+    # Increases question number
+    rounds_played += 1
+        
+    # Generate a random number between boundries
+    number_1 = random.randint(low_num, high_num)
+    number_2 = random.randint(low_num, high_num)
+    number_3 = random.randint(low_num, high_num)
 
-        # Increases question number
-        rounds_played += 1
-    
-        # Generate a random number between boundries
-        number_1 = random.randint(low_num, high_num)
-        number_2 = random.randint(low_num, high_num)
-        number_3 = random.randint(low_num, high_num)
+    # Define addition and subtraction question
+    addition_question = ("What is {} + {} =?".format(number_1, number_2))
+    addition_question_v2 = ("What is {} + {} + {} =?".format(number_1, number_2, number_3))
+    addition_question_v3 = ("What is {} plus {} =?".format(number_1, number_2))
+    subtraction_question = ("What does {} - {} =?".format(max(number_1, number_2), min(number_1, number_2)))
+    subtraction_question_v2 = ("What does {} minus {} =?".format(max(number_1, number_2), min(number_1, number_2)))
+                
+    # List of questions to randomise which question it asks
+    questions = [addition_question, addition_question_v2, addition_question_v3, subtraction_question, subtraction_question_v2]
 
-        # Define addition and subtraction question
-        addition_question = ("What is {} + {} =?".format(number_1, number_2))
-        addition_question_v2 = ("What is {} + {} + {} =?".format(number_1, number_2, number_3))
-        addition_question_v3 = ("What is {} plus {} =?".format(number_1, number_2))
-        subtraction_question = ("What does {} - {} =?".format(max(number_1, number_2), min(number_1, number_2)))
-        subtraction_question_v2 = ("What does {} minus {} =?".format(max(number_1, number_2), min(number_1, number_2)))
-            
-        # List of questions to randomise which question it asks
-        questions = [addition_question, addition_question_v2, addition_question_v3, subtraction_question, subtraction_question_v2]
+    # Randomise which question it asks
+    random_item = random.choice(questions)
 
-        # Randomise which question it asks
-        random_item = random.choice(questions)
+    input(random_item)
 
-        input(random_item)
-
-        if rounds_played + 1 >= rounds:
-            break
+    if rounds_played >= rounds:
+        break
