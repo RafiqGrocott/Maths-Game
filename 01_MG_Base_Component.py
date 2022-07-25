@@ -78,6 +78,7 @@ def check_rounds():
 
 # List of acceptable expressions
 yes_no_list = ["yes", "no"]
+
 # List of acceptable expressions
 sub_list = ["-", "take away", "minus", "subtraction"]
 add_list = ["add", "+", "addition", "plus"]
@@ -85,6 +86,11 @@ add_list = ["add", "+", "addition", "plus"]
 # Boundaries for the numbers
 low_num = 0
 high_num = 20
+
+# Gives a clean slate to add to and eventually make end of game statements on
+rounds_played = 0
+rounds_lost = 0
+rounds_won = 0
 
 # Check if the user has played this game before
 played_before = choice_checker("Have you played this game before? Please enter yes or no. ", yes_no_list, "Please enter yes / no")
@@ -98,21 +104,20 @@ if played_before == "no":
 add_sub_list = ""
 while add_sub_list == "":
     add_sub_mode = input("Would you like to play the addition quiz or the subtraction quiz? Please enter + / - ")
+
     print()
+
     if add_sub_mode in add_list:
+        game_mode = "+"
         print("Mode: +")
         break
     if add_sub_mode in sub_list:
+        game_mode = "-"
         print("Mode: -")
         break
     else:
         print("Please enter a valid operation")
         continue
-
-# Gives a clean slate to add to and eventually make end of game statements on
-rounds_played = 0
-rounds_lost = 0
-rounds_won = 0
 
 mode = "regular"
 
@@ -134,32 +139,39 @@ while end_game == "no":
         rounds += 1
     else:
         heading = "Round {} of {}".format(rounds_played + 1, rounds)
-
+    
     print(heading)
 
-
-    # Increases question number
+    # Increases round number
     rounds_played += 1
-        
+
     # Generate a random number between boundries
     number_1 = random.randint(low_num, high_num)
     number_2 = random.randint(low_num, high_num)
     number_3 = random.randint(low_num, high_num)
 
     # Define addition and subtraction question
-    addition_question = ("What is {} + {} =?".format(number_1, number_2))
-    addition_question_v2 = ("What is {} + {} + {} =?".format(number_1, number_2, number_3))
-    addition_question_v3 = ("What is {} plus {} =?".format(number_1, number_2))
-    subtraction_question = ("What does {} - {} =?".format(max(number_1, number_2), min(number_1, number_2)))
-    subtraction_question_v2 = ("What does {} minus {} =?".format(max(number_1, number_2), min(number_1, number_2)))
-                
+    addition_question = ("What is {} + {} =? ".format(number_1, number_2))
+    addition_question_v2 = ("What is {} + {} + {} =? ".format(number_1, number_2, number_3))
+    addition_question_v3 = ("What is {} plus {} =? ".format(number_1, number_2))
+    subtraction_question = ("What does {} - {} =? ".format(max(number_1, number_2), min(number_1, number_2)))
+    subtraction_question_v2 = ("What does {} minus {} =? ".format(max(number_1, number_2), min(number_1, number_2)))
+                        
     # List of questions to randomise which question it asks
     questions = [addition_question, addition_question_v2, addition_question_v3, subtraction_question, subtraction_question_v2]
+    addition_questions = [addition_question, addition_question_v2, addition_question_v3]
+    subtraction_questions = [subtraction_question, subtraction_question_v2]
 
-    # Randomise which question it asks
-    random_item = random.choice(questions)
+    # Make sure the different modes of the game work
+    add_question = random.choice(addition_questions)
+    sub_question = random.choice(subtraction_questions)
 
-    input(random_item)
+    # If the game mode is addition mode then only print addition questions
+    if game_mode == "+":
+        print(input(add_question))
+    # If the game mode is subtraction mode then only print subtraction questions
+    else:
+        print(input(sub_question))
 
     if rounds_played >= rounds:
         break

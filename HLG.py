@@ -137,7 +137,6 @@ rounds_lost = 0
 low_num = intcheck("Low Number: ")
 print("You chose a low number of ", low_num)
 
-
 # checks for a higher number
 # checks that resopnse is an integer more than the00 low number
 high_num = intcheck("High Number: ", low_num + 1)
