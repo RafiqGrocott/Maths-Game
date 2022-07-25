@@ -162,6 +162,9 @@ while end_game == "no":
     addition_questions = [addition_question, addition_question_v2, addition_question_v3]
     subtraction_questions = [subtraction_question, subtraction_question_v2]
 
+    # Making a list of questions to randomise
+    questions = [subtraction_question, subtraction_question_v2, addition_question, addition_question_v2, addition_question_v3]
+
     # Make sure the different modes of the game work
     add_question = random.choice(addition_questions)
     sub_question = random.choice(subtraction_questions)
@@ -172,6 +175,30 @@ while end_game == "no":
     # If the game mode is subtraction mode then only print subtraction questions
     else:
         print(input(sub_question))
+
+    # Randomise which question it asks
+    random_item = random.choice(questions)
+
+    if random_item == subtraction_question or random_item == subtraction_question_v2:
+        number_2 > number_1
+
+    addition_answer = number_1 + number_2
+    addition_answer_v2 = number_1 + number_2 + number_3
+    subtraction_answer = number_1 - number_2
+
+    if random_item == addition_question or random_item == addition_question_v3:
+        answer = addition_answer
+    elif random_item == subtraction_question or random_item == subtraction_question_v2:
+        answer = subtraction_answer
+    else:
+        answer = addition_answer_v2
+
+    response = input(random_item)
+
+    if response == answer:
+        print("You got it right")
+    elif response == "":
+        print("Please enter a valid answer")
 
     if rounds_played >= rounds:
         break

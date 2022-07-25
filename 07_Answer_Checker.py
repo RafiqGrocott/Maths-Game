@@ -1,33 +1,25 @@
 import random
 
-# Number checking function goes here
-def intcheck(question, response, answer, exit_code = None):
+def intcheck(response, num_high, num_low):
+    if response >= num_high or response <= num_low:
+        print("Please enter an integer which is between 0 and 61 (inclusive)")
+    try:
+        print(response)
 
-    while True:
+        if response == exit_code:
+            return response
+        
+        else: response = int(response)
 
-        #sets up error messages
-        if response == answer:
-            print("You got it right!!!")
-        elif response >= 61 or response <= -1:
-            error = "Please enter an integer between 0 and 60 (inclusive)"
-        else:
-            error = "Please enter an integer"
+    except ValueError:
+        print("Please enter an integer which is between 0 and 61 (inclusive)")
+    
+# Make sure the users answer is between 0 and 60 (inclusive)
+num_high = 61
+num_low = -1
 
-        try:
-            response = input(question)
-
-            #check to see if response is the exit code and return it
-            if response == exit_code:
-                return response
-
-            #change the response into an integer
-            else:
-                response = int(response)
-
-        #checks input is a integer
-        except ValueError:
-            print(error)
-            continue
+# Define what the exit code is
+exit_code = "xxx"
 
 # Make question number
 question_num = 0
@@ -62,8 +54,6 @@ while question_num <= 4:
     if random_item == subtraction_question or random_item == subtraction_question_v2:
         number_2 > number_1
 
-    response = intcheck(random_item)
-
     addition_answer = number_1 + number_2
     addition_answer_v2 = number_1 + number_2 + number_3
     subtraction_answer = number_1 - number_2
@@ -74,6 +64,13 @@ while question_num <= 4:
         answer = subtraction_answer
     else:
         answer = addition_answer_v2
-    
+
+    response = input(random_item)
+
+    if response == answer:
+        print("You got it right")
+    elif response == "":
+        print("Please enter a valid answer")
+
     # Add one more round onto the question_num
     question_num += 1
