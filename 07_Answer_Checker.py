@@ -1,22 +1,33 @@
 import random
 
-def intcheck(response, num_high, num_low):
-    if response >= num_high or response <= num_low:
-        print("Please enter an integer which is between 0 and 61 (inclusive)")
-    try:
+# Lets the user enter their nmuber of rounds, or continuous mode
+def check_integer(response, random_item, round_error):
+    while True:
+        response = input(random_item)
         print(response)
 
-        if response == exit_code:
-            return response
-        
-        else: response = int(response)
+        round_error = "Please enter an integer that is between 0 and 60 (inclusive)"
 
-    except ValueError:
-        print("Please enter an integer which is between 0 and 61 (inclusive)")
+        # If infinite mode not chosen, check response
+        # Is an integer that is more than 0
+        if response != "":
+            try:
+                response = int(response)
+
+                # If response is too low, go back to
+                # Start of loop
+                if response < 1 or response > 60:
+                    print(round_error)
+                    continue
+            # If response is not an integer go back to
+            # Start of loop
+            except ValueError:
+                print(round_error)
+                continue
+
+        return response
     
-# Make sure the users answer is between 0 and 60 (inclusive)
-num_high = 61
-num_low = -1
+
 
 # Define what the exit code is
 exit_code = "xxx"
@@ -42,8 +53,8 @@ while question_num <= 4:
     addition_question_v3 = ("What is {} plus {} =? ".format(number_1, number_2, number_3))
 
     # Define subtraction questions
-    subtraction_question = ("What does {} - {} =? ".format(number_1, number_2))
-    subtraction_question_v2 = ("What does {} minus {} =? ".format(number_1, number_2))
+    subtraction_question = ("What does {} - {} =? ".format(number_2, number_1))
+    subtraction_question_v2 = ("What does {} minus {} =? ".format(number_2, number_1))
     
     # Making a list of questions to randomise
     questions = [subtraction_question, subtraction_question_v2, addition_question, addition_question_v2, addition_question_v3]
@@ -56,7 +67,7 @@ while question_num <= 4:
 
     addition_answer = number_1 + number_2
     addition_answer_v2 = number_1 + number_2 + number_3
-    subtraction_answer = number_1 - number_2
+    subtraction_answer = number_2 - number_1
 
     if random_item == addition_question or random_item == addition_question_v3:
         answer = addition_answer
@@ -65,12 +76,16 @@ while question_num <= 4:
     else:
         answer = addition_answer_v2
 
-    response = input(random_item)
+    response = check_integer
+
+    print(response)
 
     if response == answer:
         print("You got it right")
     elif response == "":
         print("Please enter a valid answer")
+    else:
+        print("Oops, the answer was actually {}".format(answer))
 
     # Add one more round onto the question_num
     question_num += 1
