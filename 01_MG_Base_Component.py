@@ -45,7 +45,7 @@ def choice_checker (question, add_sub_list, error):
         print()
 
 # Lets the user enter their nmuber of rounds, or continuous mode
-def check_rounds():
+def check_integer():
     while True:
         response = input("How many rounds? or <enter> for continuous mode: ")
         print()
@@ -122,7 +122,7 @@ while add_sub_list == "":
 mode = "regular"
 
 rounds_played = 0
-rounds = check_rounds()
+rounds = check_integer()
 
 # If the user presses <enter> then run infinite mode
 if rounds == "":
