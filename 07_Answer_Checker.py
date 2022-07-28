@@ -1,26 +1,26 @@
 import random
 
 # Lets the user enter their nmuber of rounds, or continuous mode
-def check_integer():
+def check_integer(question, exit_code):
     while True:
-        response = "How many rounds? or <enter> for continuous mode: "
-        print()
-
 
         integer_error = "Please enter an integer " \
                         "that is more than 0\n"
 
         # If infinite mode not chosen, check response
         # Is an integer that is more than 0
-        if response != "":
-            try:
-                response = int(input(random_item))
+        response = input(question)
 
-                # If response is too low, go back to
-                # Start of loop
-                if response < 1:
+        if response != exit_code:
+            try:
+
+                response = int(response)
+
+                if response < 0:
                     print(integer_error)
-                    continue
+
+                return response
+
             # If response is not an integer go back to
             # Start of loop
             except ValueError:
@@ -37,10 +37,6 @@ while question_num <= 4:
     # Boundaries for the numbers
     low_num = 0
     high_num = 20
-
-    # Makes sure that teacher
-    num_low = 0
-    num_high = 60
 
     # Making the numbers random and defining the numbers
     number_1 = random.randint(low_num, high_num)
@@ -61,7 +57,6 @@ while question_num <= 4:
 
     # Randomise which question it asks
     random_item = random.choice(questions)
-    random_item = subtraction_question
 
     # Make the equations
     subtraction_answer = number_2 - number_1
@@ -75,24 +70,27 @@ while question_num <= 4:
     elif random_item == subtraction_question or random_item == subtraction_question_v2:
         answer = subtraction_answer
 
-    int(answer) 
+    user_input = ""
 
-    if response == answer:
-        print("You got it right!!!")
-    elif response == "":
-        print("Please enter a valid integer!")
-    else:
-        print("Oops, the answer was actually {}".format(answer))
+    while user_input != answer:
+        
+        user_instruction = "Enter an integer higher than 0"
 
-    # guessing loop starts here
-    while guess != secret and len(numbers_guessed) != max_guesses: 
+        end_game = "no"
+        while end_game == "no":
 
-        guess_instruction = "Please pick a number between 0 and 60".format(num_low, num_high)
+            user_input = check_integer(random_item, "xxx")
 
-        guess = check_integer(guess_instruction, low_num, high_num, "xxx")
-        if guess == "xxx":
-            end_game = "yes"
-            break
+            if user_input == answer:
+                print("You got it right!!!")
+            elif user_input == "xxx":
+                end_game = "yes"
+                break
+            elif user_input == "":
+                print("Please enter a valid integer!")
+            else:
+                print("Oops, please try again")
+
     # Increases question number by 1
     question_num += 1
 
