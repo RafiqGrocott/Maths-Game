@@ -2,10 +2,6 @@ import random
 from re import L
 from tkinter import Y
 
-# Welcomes user to game
-print("***** Welcome to THE MATHS GAME *****")
-print()
-
 # Prints instructions if user enters "no" in played_before
 def instructions():
     print("*****Instrustions*****")
@@ -71,8 +67,8 @@ def check_rounds():
                 continue
 
         return response
-        
-def check_add_integer(add_question, exit_code):
+
+def check_integer(question, exit_code):
     while True:
 
         integer_error = "Please enter an integer " \
@@ -80,7 +76,7 @@ def check_add_integer(add_question, exit_code):
 
         # If infinite mode not chosen, check response
         # Is an integer that is more than 0
-        response = input(add_question)
+        response = input(question)
 
         if response != exit_code:
             try:
@@ -90,8 +86,6 @@ def check_add_integer(add_question, exit_code):
                 if response < 0:
                     print(integer_error)
 
-                return response
-
             # If response is not an integer go back to
             # Start of loop
             except ValueError:
@@ -100,33 +94,9 @@ def check_add_integer(add_question, exit_code):
 
         return response
 
-def check_sub_integer(sub_question, exit_code):
-    while True:
-
-        integer_error = "Please enter an integer " \
-                        "that is more than 0\n"
-
-        # If infinite mode not chosen, check response
-        # Is an integer that is more than 0
-        response = input(sub_question)
-
-        if response != exit_code:
-            try:
-
-                response = int(response)
-
-                if response < 0:
-                    print(integer_error)
-
-                return response
-
-            # If response is not an integer go back to
-            # Start of loop
-            except ValueError:
-                print(integer_error)
-                continue
-
-        return response
+# Welcomes user to game
+print("***** Welcome to THE MATHS GAME *****")
+print()
 
 # List of acceptable expressions
 yes_no_list = ["yes", "no"]
@@ -186,13 +156,14 @@ while rounds_played <= rounds:
     if mode == "infinite":
         heading = "Continuous Mode: Round {}".format(rounds_played + 1)
         rounds += 1
+        print()
     else:
         heading = "Round {} of {}".format(rounds_played + 1, rounds)
-    
+        print()
+
     print(heading)
 
-    # Increases round number
-    rounds_played += 1
+
 
     # Generate a random number between boundries
     number_1 = random.randint(low_num, high_num)
@@ -220,24 +191,22 @@ while rounds_played <= rounds:
 
     # If the game mode is addition mode then only print addition questions
     if game_mode == "+":
-        check_add_integer
+        print(input(add_question))
     # If the game mode is subtraction mode then only print subtraction questions
-    else:
-        check_sub_integer
+    elif game_mode == "-":
+        print(input(sub_question))
 
-    # Randomise which question it asks
-    random_item = random.choice(questions)
 
-    if random_item == subtraction_question or random_item == subtraction_question_v2:
+    if add_question == subtraction_question or sub_question == subtraction_question_v2:
         number_2 > number_1
 
     addition_answer = number_1 + number_2
     addition_answer_v2 = number_1 + number_2 + number_3
-    subtraction_answer = number_1 - number_2
+    subtraction_answer = max(number_1, number_2) - min(number_1, number_2)
 
-    if random_item == addition_question or random_item == addition_question_v3:
+    if add_question == addition_question or add_question == addition_question_v3:
         answer = addition_answer
-    elif random_item == subtraction_question or random_item == subtraction_question_v2:
+    elif sub_question == subtraction_question or sub_question == subtraction_question_v2:
         answer = subtraction_answer
     else:
         answer = addition_answer_v2
@@ -248,7 +217,7 @@ while rounds_played <= rounds:
         
         user_instruction = "Enter an integer higher than 0"
 
-        user_input = check_add_integer(add_question, "xxx")
+        user_input = check_integer(question, "xxx")
 
         if user_input == answer:
             print("You got it right!!!")
@@ -259,6 +228,9 @@ while rounds_played <= rounds:
             print("Please enter a valid integer!")
         else:
             print("Oops, please try again")
+
+    # Increases round number
+    rounds_played += 1
 
     if rounds_played >= rounds:
         break
