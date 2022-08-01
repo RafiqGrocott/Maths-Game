@@ -44,8 +44,7 @@ def choice_checker (question, add_sub_list, error):
         print(error)
         print()
 
-# Lets the user enter their nmuber of rounds, or continuous mode
-def check_integer():
+def check_rounds():
     while True:
         response = input("How many rounds? or <enter> for continuous mode: ")
         print()
@@ -72,9 +71,62 @@ def check_integer():
                 continue
 
         return response
+        
+def check_add_integer(add_question, exit_code):
+    while True:
 
+        integer_error = "Please enter an integer " \
+                        "that is more than 0\n"
 
+        # If infinite mode not chosen, check response
+        # Is an integer that is more than 0
+        response = input(add_question)
 
+        if response != exit_code:
+            try:
+
+                response = int(response)
+
+                if response < 0:
+                    print(integer_error)
+
+                return response
+
+            # If response is not an integer go back to
+            # Start of loop
+            except ValueError:
+                print(integer_error)
+                continue
+
+        return response
+
+def check_sub_integer(sub_question, exit_code):
+    while True:
+
+        integer_error = "Please enter an integer " \
+                        "that is more than 0\n"
+
+        # If infinite mode not chosen, check response
+        # Is an integer that is more than 0
+        response = input(sub_question)
+
+        if response != exit_code:
+            try:
+
+                response = int(response)
+
+                if response < 0:
+                    print(integer_error)
+
+                return response
+
+            # If response is not an integer go back to
+            # Start of loop
+            except ValueError:
+                print(integer_error)
+                continue
+
+        return response
 
 # List of acceptable expressions
 yes_no_list = ["yes", "no"]
@@ -121,19 +173,16 @@ while add_sub_list == "":
 
 mode = "regular"
 
-rounds_played = 0
-rounds = check_integer()
+rounds = check_rounds()
 
 # If the user presses <enter> then run infinite mode
 if rounds == "":
     mode = "infinite"
     rounds = 5
 
-end_game = "no"
-while end_game == "no":
+while rounds_played <= rounds:
 
     # Rounds Heading
-    print()
     if mode == "infinite":
         heading = "Continuous Mode: Round {}".format(rounds_played + 1)
         rounds += 1
@@ -171,10 +220,10 @@ while end_game == "no":
 
     # If the game mode is addition mode then only print addition questions
     if game_mode == "+":
-        print(input(add_question))
+        check_add_integer
     # If the game mode is subtraction mode then only print subtraction questions
     else:
-        print(input(sub_question))
+        check_sub_integer
 
     # Randomise which question it asks
     random_item = random.choice(questions)
@@ -193,12 +242,23 @@ while end_game == "no":
     else:
         answer = addition_answer_v2
 
-    response = input(random_item)
+    user_input = ""
 
-    if response == answer:
-        print("You got it right")
-    elif response == "":
-        print("Please enter a valid answer")
+    while user_input != answer:
+        
+        user_instruction = "Enter an integer higher than 0"
+
+        user_input = check_add_integer(add_question, "xxx")
+
+        if user_input == answer:
+            print("You got it right!!!")
+        elif user_input == "xxx":
+            end_game = "yes"
+            break
+        elif user_input == "":
+            print("Please enter a valid integer!")
+        else:
+            print("Oops, please try again")
 
     if rounds_played >= rounds:
         break

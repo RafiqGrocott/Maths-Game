@@ -76,20 +76,17 @@ while question_num <= 4:
         
         user_instruction = "Enter an integer higher than 0"
 
-        end_game = "no"
-        while end_game == "no":
+        user_input = check_integer(random_item, "xxx")
 
-            user_input = check_integer(random_item, "xxx")
-
-            if user_input == answer:
-                print("You got it right!!!")
-            elif user_input == "xxx":
-                end_game = "yes"
-                break
-            elif user_input == "":
-                print("Please enter a valid integer!")
-            else:
-                print("Oops, please try again")
+        if user_input == answer:
+            print("You got it right!!!")
+        elif user_input == "xxx":
+            end_game = "yes"
+            break
+        elif user_input == "":
+            print("Please enter a valid integer!")
+        else:
+            print("Oops, please try again")
 
     # Increases question number by 1
     question_num += 1
