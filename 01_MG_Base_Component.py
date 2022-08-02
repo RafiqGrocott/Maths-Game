@@ -19,7 +19,7 @@ def instructions():
     print("Lost = Answered question incorrectly.")
     print()
 
-# Checks if the users choice is valid for add_sub_mode
+# Checks if the users choice is valid "have you played this game before?"
 def choice_checker (question, add_sub_list, error):
 
     valid = False
@@ -40,12 +40,14 @@ def choice_checker (question, add_sub_list, error):
         print(error)
         print()
 
+# Checks if user presses <enter> or a valid integer and if not it prints an error
 def check_rounds():
     while True:
+        # Asks user the question
         response = input("How many rounds? or <enter> for continuous mode: ")
         print()
 
-
+        # Defines round error if user enters invalid integer
         round_error = "Please type either <enter> or an integer " \
                         "that is more than 0\n"
 
@@ -70,12 +72,12 @@ def check_rounds():
 
 def check_integer(question, exit_code):
     while True:
-
+        
+        # Defines integer error if needed
         integer_error = "Please enter an integer " \
                         "that is more than 0\n"
 
-        # If infinite mode not chosen, check response
-        # Is an integer that is more than 0
+        # Acquires users answer
         response = input(question)
 
         if response != exit_code:
@@ -197,7 +199,7 @@ while rounds_played <= rounds:
         random_item = add_question
     # If the game mode is subtraction mode then only print subtraction questions
     elif game_mode == "-":
-        eandom_item = sub_question
+        random_item = sub_question
 
     if add_question == subtraction_question or sub_question == subtraction_question_v2:
         number_2 > number_1
@@ -219,6 +221,7 @@ while rounds_played <= rounds:
 
     if user_input == "xxx":
         break
+
     if user_input == answer:
         print("You got it right!!!")
     elif user_input == "":
@@ -233,4 +236,3 @@ while rounds_played <= rounds:
 
     if rounds_played >= rounds:
         break
-
