@@ -185,17 +185,19 @@ while rounds_played <= rounds:
     # Making a list of questions to randomise
     questions = [subtraction_question, subtraction_question_v2, addition_question, addition_question_v2, addition_question_v3]
 
+    # Randomise which question it asks
+    random_item = random.choice(questions)
+
     # Make sure the different modes of the game work
     add_question = random.choice(addition_questions)
     sub_question = random.choice(subtraction_questions)
 
     # If the game mode is addition mode then only print addition questions
     if game_mode == "+":
-        print(input(add_question))
+        random_item = add_question
     # If the game mode is subtraction mode then only print subtraction questions
     elif game_mode == "-":
-        print(input(sub_question))
-
+        eandom_item = sub_question
 
     if add_question == subtraction_question or sub_question == subtraction_question_v2:
         number_2 > number_1
@@ -204,33 +206,31 @@ while rounds_played <= rounds:
     addition_answer_v2 = number_1 + number_2 + number_3
     subtraction_answer = max(number_1, number_2) - min(number_1, number_2)
 
-    if add_question == addition_question or add_question == addition_question_v3:
+    if random_item == addition_question or random_item == addition_question_v3:
         answer = addition_answer
-    elif sub_question == subtraction_question or sub_question == subtraction_question_v2:
+    elif random_item == subtraction_question or random_item == subtraction_question_v2:
         answer = subtraction_answer
     else:
         answer = addition_answer_v2
-
-    user_input = ""
-
-    while user_input != answer:
         
-        user_instruction = "Enter an integer higher than 0"
+    user_instruction = "Enter an integer higher than 0"
 
-        user_input = check_integer(question, "xxx")
+    user_input = check_integer(random_item, "xxx")
 
-        if user_input == answer:
-            print("You got it right!!!")
-        elif user_input == "xxx":
-            end_game = "yes"
-            break
-        elif user_input == "":
-            print("Please enter a valid integer!")
-        else:
-            print("Oops, please try again")
+    if user_input == "xxx":
+        break
+    if user_input == answer:
+        print("You got it right!!!")
+    elif user_input == "":
+        print("Please enter a valid integer!")
+        continue
+    else:
+        print("Oops, please try again")
+        continue
 
     # Increases round number
     rounds_played += 1
 
     if rounds_played >= rounds:
         break
+
