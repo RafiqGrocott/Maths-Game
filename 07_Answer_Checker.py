@@ -69,10 +69,6 @@ while question_num <= 4:
         answer = addition_answer_v2
     elif random_item == subtraction_question or random_item == subtraction_question_v2:
         answer = subtraction_answer
-
-    user_input = ""
-
-    while user_input != answer:
         
         user_instruction = "Enter an integer higher than 0"
 

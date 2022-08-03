@@ -1,4 +1,3 @@
-from os import access
 import random
 
 # Prints instructions if user enters "no" in played_before
@@ -79,11 +78,14 @@ def check_integer(question, exit_code):
         # Acquires users answer
         response = input(question)
 
+        # Makes sure the answer is a string in order to accept their exit code
         if response != exit_code:
             try:
-
+                
+                # If the response isnt the exit code then make it an integer
                 response = int(response)
-
+                
+                # If the response is too low then print the error code
                 if response < 0:
                     print(integer_error)
 
@@ -96,7 +98,7 @@ def check_integer(question, exit_code):
         return response
 
 # Welcomes user to game
-print("***** Welcome to THE MATHS GAME *****")
+print("***** Welcome to THE MATHS TEST *****")
 print()
 
 # List of acceptable expressions
@@ -121,8 +123,11 @@ rounds_played = 0
 rounds_lost = 0
 rounds_won = 0
 
+# Make and define end game statement
+end_quiz = "no"
+
 # Check if the user has played this game before
-played_before = choice_checker("Have you played this game before? Please enter yes or no. ", yes_no_list, "Please enter yes / no")
+played_before = choice_checker("Have you done this test before? Please enter yes or no. ", yes_no_list, "Please enter yes / no")
 print()
 
 # If the user hasn't played before they get to see the instructions
@@ -132,24 +137,32 @@ if played_before == "no":
 # Ask user if they want to play addition or subtraction mode
 add_sub_list = ""
 while add_sub_list == "":
+    # Get the users answer
     add_sub_mode = input("Would you like to play the addition quiz or the subtraction quiz? Please enter + / - ")
 
     print()
 
+    # If the answer is an addition answer change the game mode and show the user you chose
     if add_sub_mode in add_list:
         game_mode = "+"
         print("Mode: +")
         break
+
+    # If the answer is an subtraction answer change the game mode and show the user you chose
     if add_sub_mode in sub_list:
         game_mode = "-"
         print("Mode: -")
         break
+
+    # If the response was invalid in any way print the error code
     else:
         print("Please enter a valid operation")
         continue
 
+# Make mode regular to change or keep later
 mode = "regular"
 
+# Get the users answer and use my function to check for valid and invalid
 rounds = check_rounds()
 
 # If the user presses <enter> then run infinite mode
@@ -157,7 +170,8 @@ if rounds == "":
     mode = "infinite"
     rounds = 5
 
-while rounds_played <= rounds:
+# Make sure the rounds they have played dont exceed the amount of rounds they chose to play
+while rounds_played <= rounds and end_quiz == "no":
 
     # Rounds Heading
     if mode == "infinite":
@@ -169,6 +183,7 @@ while rounds_played <= rounds:
         heading = "Question {} of {}".format(rounds_played + 1, rounds)
         print()
 
+    # Print the heading chose
     print(heading)
 
     # Generate a random number between boundries
@@ -176,7 +191,7 @@ while rounds_played <= rounds:
     number_2 = random.randint(low_num, high_num)
     number_3 = random.randint(low_num, high_num)
 
-    # Define addition and subtraction question
+    # Define addition and subtraction questions
     addition_question = ("What is {} + {} =? ".format(number_1, number_2))
     addition_question_v2 = ("What is {} + {} + {} =? ".format(number_1, number_2, number_3))
     addition_question_v3 = ("What is {} plus {} =? ".format(number_1, number_2))
@@ -188,13 +203,10 @@ while rounds_played <= rounds:
     addition_questions = [addition_question, addition_question_v2, addition_question_v3]
     subtraction_questions = [subtraction_question, subtraction_question_v2]
 
-    # Making a list of questions to randomise
-    questions = [subtraction_question, subtraction_question_v2, addition_question, addition_question_v2, addition_question_v3]
-
     # Randomise which question it asks
     random_item = random.choice(questions)
 
-    # Make sure the different modes of the game work
+    # Makes sure the questions asked are only the correct type of questions
     add_question = random.choice(addition_questions)
     sub_question = random.choice(subtraction_questions)
 
@@ -205,39 +217,57 @@ while rounds_played <= rounds:
     elif game_mode == "-":
         random_item = sub_question
 
+    # Define answers so we can compare later
     addition_answer = number_1 + number_2
     addition_answer_v2 = number_1 + number_2 + number_3
+
+    # Makes sure the subtraction answer doesn't go into the negatives
     subtraction_answer = max(number_1, number_2) - min(number_1, number_2)
 
+    # Compares the question to which question it asks to define which answer is the correct one
     if random_item == addition_question or random_item == addition_question_v3:
         answer = addition_answer
     elif random_item == subtraction_question or random_item == subtraction_question_v2:
         answer = subtraction_answer
     else:
         answer = addition_answer_v2
-        
-    user_input = check_integer(random_item, "xxx")
-
-    if user_input == "xxx":
-        break
     
+    # Second loop to make sure it continues with the same question if wrong instead of crerating new question
     while rounds_played <= rounds:
 
+        # Checks for valid, invalid integers and exit code
+        user_input = check_integer(random_item, "xxx")
+
+        # Makes sure the exit code breaks the entire loop
+        if user_input == "xxx":
+            end_quiz = "yes"
+            break
+
+        # Adds a number to the questions guessed to make game stats
         numbers_guessed += 1
 
+        # Creates instruction to enter a valid integer
         user_instruction = "Enter an integer higher than 0"
 
-        if user_input != answer:
-            print("Oops, please try again")
-            continue
-        elif user_input == answer:
+        # If the users response is correct go to next question
+        if user_input == answer:
+            # If the guess is correct then add one to the correct guesses
+            # in order to create game stats
             guesses_correct += 1
             print("You got it right!!!")
             break
+
+        # If the answer is wrong continue to the top of the loop and asking the same question
+        elif user_input != answer:
+            print("Oops, please try again")
+            continue
+
+        # If the user doesn't answer with anything print the invalid int code
         elif user_input == "":
             print("Please enter a valid integer!")
             continue
 
+    
     # Increases round number
     rounds_played += 1
 
@@ -246,26 +276,36 @@ while rounds_played <= rounds:
 
 print()
 
-if numbers_guessed == 0:
+# If the user actually answers something then create the users game stats
+while numbers_guessed > 0:
 
+    accuracy_score = guesses_correct / numbers_guessed *100
 
-accuracy_score = guesses_correct / numbers_guessed *100
+    # Make a hook
+    print("*****END GAME STATEMENTS*****")
+    print()
 
-print("*****END GAME STATEMENTS*****")
-print()
-print("You took {} guesses, and got {} correct!".format(numbers_guessed, guesses_correct))
-print()
-print("This means you got {:.1f}% correct!".format(accuracy_score))
+    # Tells the user how many guesses they took and how many they got correct
+    print("You took {} guesses, and got {} correct!".format(numbers_guessed, guesses_correct))
+    print()
 
-print()
+    # Gets the percentage of answers correct to 1 d.p
+    print("This means you got {:.1f}% correct!".format(accuracy_score))
 
-if accuracy_score <= 30:
-    print("You might want to take the test again to get better at your craft")
-elif accuracy_score > 30 or accuracy_score <= 50:
-    print("I know you could do better! Maybe try again.")
-elif accuracy_score > 50 or accuracy_score <= 80:
-    print("You're getting there now! Maybe a few more trys will help!")
-elif accuracy_score > 80 or accuracy_score < 100:
-    print("You're becoming a master! Try one more time and try get 100%!")
-elif accuracy_score == 100:
-    print("Congratulations! You are now a master!")
+    print()
+
+    # If the answer is equal to or less than certain scores print seperate messages
+    if accuracy_score <= 30:
+        print("You might want to take the test again to get better at your craft")
+    elif accuracy_score > 30 or accuracy_score <= 50:
+        print("I know you could do better! Maybe try again.")
+    elif accuracy_score > 50 or accuracy_score <= 80:
+        print("You're getting there now! Maybe a few more trys will help!")
+    elif accuracy_score > 80 or accuracy_score < 100:
+        print("You're becoming a master! Try one more time and try get 100%!")
+    elif accuracy_score == 100:
+        print("Congratulations! You are now a master!")
+    break
+# If the user doesnt enter anything then run a print statement
+else:
+    print("You didnt guess anything this test!")
