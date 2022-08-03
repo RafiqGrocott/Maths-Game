@@ -295,16 +295,17 @@ while numbers_guessed > 0:
     print()
 
     # If the answer is equal to or less than certain scores print seperate messages
-    if accuracy_score <= 30:
+    if accuracy_score < 30:
         print("You might want to take the test again to get better at your craft")
-    elif accuracy_score > 30 or accuracy_score <= 50:
+    if accuracy_score >= 30 and accuracy_score < 50:
         print("I know you could do better! Maybe try again.")
-    elif accuracy_score > 50 or accuracy_score <= 80:
+    elif accuracy_score >= 50 and accuracy_score < 80:
         print("You're getting there now! Maybe a few more trys will help!")
-    elif accuracy_score > 80 or accuracy_score < 100:
+    elif accuracy_score >= 80 and accuracy_score < 100:
         print("You're becoming a master! Try one more time and try get 100%!")
     elif accuracy_score == 100:
         print("Congratulations! You are now a master!")
+
     break
 # If the user doesnt enter anything then run a print statement
 else:
