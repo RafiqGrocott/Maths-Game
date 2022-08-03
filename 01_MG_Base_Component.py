@@ -1,6 +1,5 @@
+from os import access
 import random
-from re import L
-from tkinter import Y
 
 # Prints instructions if user enters "no" in played_before
 def instructions():
@@ -107,6 +106,12 @@ yes_no_list = ["yes", "no"]
 sub_list = ["-", "take away", "minus", "subtraction"]
 add_list = ["add", "+", "addition", "plus"]
 
+# Checks for number of guesses to check accuracy
+numbers_guessed = 0
+
+# Checks for number of answers guessed correctly to check accuracy
+guesses_correct = 0
+
 # Boundaries for the numbers
 low_num = 0
 high_num = 20
@@ -156,16 +161,15 @@ while rounds_played <= rounds:
 
     # Rounds Heading
     if mode == "infinite":
-        heading = "Continuous Mode: Round {}".format(rounds_played + 1)
+        heading = "Continuous Mode: Question {}".format(rounds_played + 1)
         rounds += 1
         print()
+    # If the rounds are a set limit change the heading
     else:
-        heading = "Round {} of {}".format(rounds_played + 1, rounds)
+        heading = "Question {} of {}".format(rounds_played + 1, rounds)
         print()
 
     print(heading)
-
-
 
     # Generate a random number between boundries
     number_1 = random.randint(low_num, high_num)
@@ -201,9 +205,6 @@ while rounds_played <= rounds:
     elif game_mode == "-":
         random_item = sub_question
 
-    if add_question == subtraction_question or sub_question == subtraction_question_v2:
-        number_2 > number_1
-
     addition_answer = number_1 + number_2
     addition_answer_v2 = number_1 + number_2 + number_3
     subtraction_answer = max(number_1, number_2) - min(number_1, number_2)
@@ -215,24 +216,56 @@ while rounds_played <= rounds:
     else:
         answer = addition_answer_v2
         
-    user_instruction = "Enter an integer higher than 0"
-
     user_input = check_integer(random_item, "xxx")
 
     if user_input == "xxx":
         break
+    
+    while rounds_played <= rounds:
 
-    if user_input == answer:
-        print("You got it right!!!")
-    elif user_input == "":
-        print("Please enter a valid integer!")
-        continue
-    else:
-        print("Oops, please try again")
-        continue
+        numbers_guessed += 1
+
+        user_instruction = "Enter an integer higher than 0"
+
+        if user_input != answer:
+            print("Oops, please try again")
+            continue
+        elif user_input == answer:
+            guesses_correct += 1
+            print("You got it right!!!")
+            break
+        elif user_input == "":
+            print("Please enter a valid integer!")
+            continue
 
     # Increases round number
     rounds_played += 1
 
     if rounds_played >= rounds:
         break
+
+print()
+
+if numbers_guessed == 0:
+
+
+accuracy_score = guesses_correct / numbers_guessed *100
+
+print("*****END GAME STATEMENTS*****")
+print()
+print("You took {} guesses, and got {} correct!".format(numbers_guessed, guesses_correct))
+print()
+print("This means you got {:.1f}% correct!".format(accuracy_score))
+
+print()
+
+if accuracy_score <= 30:
+    print("You might want to take the test again to get better at your craft")
+elif accuracy_score > 30 or accuracy_score <= 50:
+    print("I know you could do better! Maybe try again.")
+elif accuracy_score > 50 or accuracy_score <= 80:
+    print("You're getting there now! Maybe a few more trys will help!")
+elif accuracy_score > 80 or accuracy_score < 100:
+    print("You're becoming a master! Try one more time and try get 100%!")
+elif accuracy_score == 100:
+    print("Congratulations! You are now a master!")
